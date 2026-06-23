@@ -1,0 +1,37 @@
+name: Auto Create Pull Request
+
+on:
+push:
+branches:
+- 'feature/**'
+
+permissions:
+contents: write
+pull-requests: write
+
+jobs:
+create-pr:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v4
+
+  - name: Create Pull Request
+    uses: peter-evans/create-pull-request@v7
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      base: develop
+      branch: ${{ github.ref_name }}
+      title: ${{ github.ref_name }}
+      body: |
+        ## Description
+        Auto-generated PR.
+
+        ## Changes
+        - Implemented Jira ticket requirements.
+
+        ## Testing
+        - Tests executed locally.
+```
